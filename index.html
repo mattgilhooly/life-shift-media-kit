@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Life Shift Media Kit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one narrow column. Story first, then who listens (with an age chart), what a partnership funds, three ways to partner, where it is going. */
+:root {
+  --bg: #04283b;
+  --surface: #0a3a52;
+  --line: #1d5671;
+  --fg: #eaf4f8;
+  --muted: #a9c4d1;
+  --gold: #ffb81c;
+  --teal: #4cc3e3;
+  --on-gold: #04283b;
+  --display: "League Gothic", "Arial Narrow", Impact, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f9fb; --surface: #e3eef3; --line: #bcd3de; --fg: #062a3c;
+    --muted: #3f6577; --gold: #b87500; --teal: #0b6f8c; --on-gold: #ffffff;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f5f9fb; --surface: #e3eef3; --line: #bcd3de; --fg: #062a3c;
+  --muted: #3f6577; --gold: #b87500; --teal: #0b6f8c; --on-gold: #ffffff;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 1rem/1.65 var(--body);
+  padding-inline: 1rem; padding-block: 2.5rem 4rem;
+}
+.wrap { max-width: 62rem; margin-inline: auto; display: flex; flex-direction: column; gap: 3.75rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0.02em; text-wrap: balance; margin: 0; line-height: 1; text-transform: uppercase; }
+h1 { font-size: clamp(3.2rem, 11vw, 6.5rem); }
+h2 { font-size: clamp(2rem, 5vw, 2.8rem); color: var(--teal); }
+h3 { font-size: 2.2rem; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.lede { font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.5; }
+.mast { display: flex; flex-direction: column; gap: 1.25rem; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+.award { align-self: flex-start; background: var(--gold); color: var(--on-gold); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 2px; }
+section { display: flex; flex-direction: column; gap: 1.25rem; }
+.story { max-width: 44rem; gap: 1rem; }
+.story p { font-size: 1.1rem; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 2rem; }
+.two > div { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.band { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.5rem 2rem; }
+.stat { display: flex; flex-direction: column; gap: 0.25rem; border-top: 3px solid var(--gold); padding-top: 0.75rem; min-width: 0; }
+.stat .n { font-family: var(--display); font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat .l { color: var(--muted); font-size: 0.95rem; }
+.ages { display: flex; flex-direction: column; gap: 0.5rem; max-width: 36rem; }
+.age { display: grid; grid-template-columns: 3.5rem 1fr 3rem; align-items: center; gap: 0.75rem; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+.age .bar { height: 0.9rem; background: var(--surface); border-radius: 2px; overflow: hidden; }
+.age .bar i { display: block; height: 100%; background: var(--teal); }
+.age.peak .bar i { background: var(--gold); }
+.age .pct { text-align: right; color: var(--muted); }
+.src { color: var(--muted); font-size: 0.85rem; }
+.funds { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.funds li { background: var(--surface); padding: 1.25rem; border-radius: 4px; display: flex; flex-direction: column; gap: 0.35rem; }
+.funds strong { font-weight: 700; }
+.funds span { color: var(--muted); font-size: 0.95rem; }
+.fit { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fit li { border: 1px solid var(--line); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.95rem; }
+.pkgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr)); gap: 1rem; }
+.pkg { background: var(--surface); padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; min-width: 0; border-radius: 4px; }
+.pkg.feature { outline: 2px solid var(--gold); }
+.pkg .tag { color: var(--muted); font-style: italic; }
+.pkg ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.pkg .rate { font-family: var(--display); font-size: 3rem; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+.pkg .rate small { font-family: var(--body); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.04em; margin-left: 0.4rem; }
+.note { color: var(--muted); font-size: 0.95rem; }
+.cta { background: var(--surface); padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; border-radius: 4px; }
+.cta .mail { font-size: clamp(1.1rem, 4vw, 1.6rem); font-weight: 600; color: var(--gold); overflow-wrap: anywhere; user-select: all; }
+footer { color: var(--muted); font-size: 0.8rem; }
+</style>
+
+</head>
+<body>
+<main class="wrap">
+  <header class="mast">
+    <div class="eyebrow">Partnership kit · Fall 2026</div>
+    <h1>The Life Shift</h1>
+    <p class="lede">Conversations about the moments that changed everything.</p>
+    <span class="award">2024 Ear Worthy Best Overall Podcast of the Year</span>
+  </header>
+
+  <section class="story" aria-labelledby="why">
+    <h2 id="why">Why this show exists</h2>
+    <p>I lost my mom when I was eight years old. That loss shaped most of what came after, and it is the reason I started The Life Shift.</p>
+    <p>Every episode is one person and one moment, told in their own words. The listener hears that someone else has stood where they are standing, and that they are not alone.</p>
+    <p>The show is independent and I own it. No network decides who gets to tell their story.</p>
+  </section>
+
+  <section aria-labelledby="listeners">
+    <h2 id="listeners">Who listens</h2>
+    <div class="band">
+      <div class="stat"><span class="n">About 1,400</span><span class="l">Podcast downloads in a typical week</span></div>
+      <div class="stat"><span class="n">290+</span><span class="l">Interview episodes since March 2022</span></div>
+      <div class="stat"><span class="n">4 in 5</span><span class="l">Listeners are between 35 and 64</span></div>
+      <div class="stat"><span class="n">2 in 3</span><span class="l">Listeners are women</span></div>
+    </div>
+    <div class="ages" role="img" aria-label="Listener age ranges: 18 to 24, 2 percent. 25 to 34, 11 percent. 35 to 44, 22 percent. 45 to 54, 35 percent. 55 to 64, 25 percent. 65 and over, 5 percent.">
+      <div class="age"><span>18 to 24</span><span class="bar"><i style="width:5.7%"></i></span><span class="pct">2%</span></div>
+      <div class="age"><span>25 to 34</span><span class="bar"><i style="width:31%"></i></span><span class="pct">11%</span></div>
+      <div class="age"><span>35 to 44</span><span class="bar"><i style="width:62%"></i></span><span class="pct">22%</span></div>
+      <div class="age peak"><span>45 to 54</span><span class="bar"><i style="width:100%"></i></span><span class="pct">35%</span></div>
+      <div class="age"><span>55 to 64</span><span class="bar"><i style="width:71%"></i></span><span class="pct">25%</span></div>
+      <div class="age"><span>65 and over</span><span class="bar"><i style="width:14%"></i></span><span class="pct">5%</span></div>
+    </div>
+    <p class="src">Age and gender come from Megaphone listeners whose apps share them, about 500 people since June 2026. Downloads are counted separately and are not added to any other platform.</p>
+    <div class="band">
+      <div class="stat"><span class="n">11.5k</span><span class="l">YouTube views in the last 4 weeks, with 16.4k minutes watched</span></div>
+      <div class="stat"><span class="n">6.2k</span><span class="l">Instagram accounts reached in the last 4 weeks</span></div>
+      <div class="stat"><span class="n">44%</span><span class="l">Average newsletter open rate</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="funds">
+    <h2 id="funds">What a partnership makes possible</h2>
+    <p>The Life Shift has no network and no sales team. Partner support goes straight back into the show.</p>
+    <ul class="funds">
+      <li><strong>Better production</strong><span>Cleaner sound, stronger editing, and episodes that look and sound the way these stories deserve.</span></li>
+      <li><strong>An independent show that keeps running</strong><span>Two new conversations a week, with time to prepare for each one.</span></li>
+      <li><strong>Reaching more listeners</strong><span>Marketing that puts these stories in front of people who need to hear them.</span></li>
+      <li><strong>Award submissions</strong><span>Entering the show where it can be recognized, and carrying that recognition to partners.</span></li>
+    </ul>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Who it fits</h2>
+      <p>Partners are chosen for alignment. I read every message myself, in my own words, and only after I have used or believed in what you make.</p>
+    </div>
+    <div>
+      <ul class="fit">
+        <li>Grief and mental health support</li>
+        <li>Books and journaling</li>
+        <li>Coaching and therapy</li>
+        <li>Meaningful gifts</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="packages">
+    <h2 id="packages">Three ways to partner</h2>
+    <p class="note">One flat rate per package. One partner per episode. Each package can be adjusted to fit your goals.</p>
+    <div class="pkgs">
+      <article class="pkg">
+        <h3>Spark</h3>
+        <p class="tag">For brands who want to light the way for stories to be heard.</p>
+        <ul>
+          <li>Host read mention in 2 new episodes</li>
+          <li>1 older episode with new artwork and your sponsor mention and link in the show notes</li>
+          <li>Logo and credit on episode artwork</li>
+          <li>1 newsletter mention</li>
+          <li>1 tagged social post</li>
+        </ul>
+        <p class="note">Runs over 2 to 3 weeks</p>
+        <div class="rate">$500<small>FLAT</small></div>
+      </article>
+      <article class="pkg feature">
+        <h3>Belonging</h3>
+        <p class="tag">For brands who want deeper integration across new and evergreen favorites.</p>
+        <ul>
+          <li>Host read mention in 3 new episodes</li>
+          <li>3 older episodes with new artwork and your sponsor mention and link in the show notes</li>
+          <li>Logo and credit on episode artwork</li>
+          <li>1 featured newsletter placement</li>
+          <li>2 tagged social posts</li>
+          <li>YouTube open and close sponsor credit</li>
+          <li>Short written note on the episode page</li>
+        </ul>
+        <p class="note">Runs over 4 to 6 weeks</p>
+        <div class="rate">$1,250<small>FLAT</small></div>
+      </article>
+      <article class="pkg">
+        <h3>Legacy</h3>
+        <p class="tag">For brands who want to leave their mark and sustain this indie platform.</p>
+        <ul>
+          <li>Presenting partner across 10 episodes: host read mentions in 6 new episodes, plus new artwork and a show notes mention with link in 4 older episodes</li>
+          <li>A bonus mini episode, "Made possible by" your brand</li>
+          <li>Logo and credit on episode artwork</li>
+          <li>Dedicated partner section on the website</li>
+          <li>2 featured newsletter placements</li>
+          <li>3 tagged social posts</li>
+          <li>YouTube credit and a branded short</li>
+          <li>No competing brand in your category during your run</li>
+        </ul>
+        <p class="note">Runs over 6 to 8 weeks</p>
+        <div class="rate">$2,500<small>FLAT</small></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Founding partners</h2>
+      <p>The first two brands to partner this season receive one extra older episode with new artwork and a show notes mention, and their rate locked through 2027.</p>
+    </div>
+    <div>
+      <h2>Add a conversation</h2>
+      <p>For brands that are a true fit, a custom Life Shift conversation with someone from your organization can be added to any package for $750.</p>
+    </div>
+  </section>
+
+  <section class="story" aria-labelledby="next">
+    <h2 id="next">Where this is going</h2>
+    <p>The Life Shift is the first chapter. I am building toward a memoir and a speaking practice that carry these stories further, and the people who partner with the show now become part of how that begins.</p>
+  </section>
+
+  <section class="cta">
+    <h2>Next step</h2>
+    <p>Send me a note about your brand and what you hope to share. I reply to every message myself.</p>
+    <span class="mail">matt@thelifeshiftpodcast.com</span>
+    <p class="note">thelifeshiftpodcast.com</p>
+  </section>
+
+  <footer>Numbers last updated Oct 12, 2026 from Megaphone, YouTube, Instagram and beehiiv.</footer>
+</main>
+</body>
+</html>
